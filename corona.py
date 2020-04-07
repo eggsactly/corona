@@ -8,16 +8,9 @@
 # their paper "Modeling epidemics with differential equations". 
 # http://www.tnstate.edu/mathematics/mathreu/filesreu/GroupProjectSIR.pdf
 
-# Metrics from these pages
-# Growth factor of 7% per day from 
-# https://www.worldometers.info/coronavirus/coronavirus-cases/
-# beta (recovery rate) extrapolated by ratio of recoveries vs. new cases
-alpha = 0.0000000007 # per person per person per day
-beta = 0.02 # per person per day
-
 
 # US Population on 4/4/20 was 329,472,392 from https://www.census.gov/popclock/
-
+P = 329472392.0
 
 # Initial conditions on 4/4/20
 # Infected people
@@ -25,7 +18,14 @@ I = 336673.0
 # Recovered people
 R = 17977.0
 # Susceptible people 
-S = 329472392.0 - I - R
+S = P - I - R
+
+# Metrics from these pages
+# Growth factor of 7% per day from 
+# https://www.worldometers.info/coronavirus/coronavirus-cases/
+# beta (recovery rate) extrapolated by ratio of recoveries vs. new cases
+alpha = 0.07/P # per person per person per day
+beta = 0.02 # per person per day
 
 # Time scale shall be days
 dT = 1.0
@@ -43,6 +43,6 @@ while I > 1000:
     I += dI
     R += dR
 
-    T += 1
+    T += dT
     print("" + str(T) + " " + str(S) + " " + str(I) + " " + str(R))
 
